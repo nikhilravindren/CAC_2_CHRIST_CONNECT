@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+<br>
+<br>
+<form class="row g-3" action="{% url 'jobposting' %}" method="post">
+    {% csrf_token %}
+    <div class="col-md-6">
+        <label for="inputEmail4" class="form-label">username</label>
+        <input type="text" class="form-control" id="inputEmail4" name="username" required>
+    </div>
+    <div class="col-md-6">
+        <label for="inputPassword4" class="form-label">job title</label>
+        <input type="text" class="form-control" id="inputPassword4" name="jobtitle" required>
+    </div>
+    <div class="col-md-6">
+        <label for="inputAddress" class="form-label">company name</label>
+        <input type="text" class="form-control" id="inputAddress" placeholder="" name="companyname" required>
+    </div>
+    <div class="col-md-6">
+        <label for="inputAddress2" class="form-label">location</label>
+        <input type="text" class="form-control" id="inputAddress2" placeholder="" name="location" required>
+    </div>
+    <div class="col-md-6">
+        <label for="inputState" class="form-label">job-category</label>
+        <select id="inputState" class="form-select" name="job-category" required>
+            <option>Design and Creative </option>
+            <option>Marketing</option>
+            <option>customer Service</option>
+            <option>Human Resource</option>
+            <option>Project Management</option>
+            <option>Business Development</option>
+            <option>Sales and Communication</option>
+            <option>Teaching and Education</option>
+        </select>
+    </div>
+
+    <div class="col-md-6">
+        <label for="inputState" class="form-label">package</label>
+        <select id="inputState" class="form-select" name="package" required>
+            <option selected> </option>
+            <option>1-2 LPA</option>
+            <option>2-3 LPA</option>
+            <option>3-5 LPA</option>
+            <option>5-10 LPA</option>
+            <option>10-15 LPA</option>
+            <option>15 LPA AND ABOVE..</option>
+        </select>
+    </div>
+    <div class="col-md-6">
+        <label for="inputState" class="form-label">job-type</label>
+        <select id="inputState" class="form-select" name="job-type" required>
+            <option selected> </option>
+            <option>part-time</option>
+            <option>full-time</option>
+        </select>
+    </div>
+    <div class="col-md-6">
+        <label for="inputZip" class="form-label">application deadline</label>
+        <input type="datetime" class="form-control" id="inputZip" name="deadline" placeholder="YYYY-MM-DD" required>
+    </div>
+    <div class="col-md-12">
+        <label for="text">job description</label>
+        <textarea name="jobdescription" id="text" cols="150" rows="5"></textarea>
+
+    </div>
+    <div class="col-12">
+        <button type="submit" class="btn btn-primary">post job</button>
+    </div>
+</form>
+
+{% endblock content %}

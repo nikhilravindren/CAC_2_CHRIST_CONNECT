@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+<!-- Scrollable modal -->
+<div class="modal-dialog modal-dialog-scrollable">
+    <h1>{{data.job_title}}</h1>
+    <h2>{{data.job_location}}</h2>
+    <h2>{{data.job_category}}</h2>
+    <h2>{{data.job_package}}</h2>
+    <h2>{{data.job_type}}</h2>
+    <h2>{{data.job_deadline}}</h2>
+    <h2>{{data.job_description}}</h2>
+  </div>
+
+
+
+
+
+  {% endblock content %}
