@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import path
 from students.views import job,jobposting,jobsearch,jobcategory,details
 from cadmin.views import Dashboard,table , statuschange , edituser , user_login
+from user.views import profile
 
 urlpatterns = [
 
@@ -39,6 +40,11 @@ urlpatterns = [
     path('Dashboard', Dashboard, name = "dashboard"),
     path('table', table, name = "table"),
     path('statuschange/<int:user_id>' , statuschange , name="statuschange"),
-    path('edituser/<int:user_id>' , edituser , name="edituser")
+    path('edituser/<int:user_id>' , edituser , name="edituser"),
+
+
+# user views
+
+   path('profile',profile,name='profile')
 
 ]
