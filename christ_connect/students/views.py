@@ -1,7 +1,32 @@
 from django.shortcuts import render,redirect
 from .models import JobPortal
+from cadmin.models import user_profile
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.contrib.auth.models import User
+from django.contrib.auth import login , authenticate
+from django.contrib.auth.decorators import login_required
 
-# Create your views here.
+
+def user_user_login(request):
+    if request.method == "POST":
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(username = username , password = password)
+        if user is not None and user.is_active:
+            if user.is_superuser == False and user.is_staff == False:
+                login(request , user)
+                return redirect('job')
+            elif user.is_superuser == False and user.is_staff == True:
+                login(request , user)
+                return redirect('job')
+            else:
+                msg = "You are not autherized for the access!"
+                return render(request , 'cadmin/Users/login.html' , {'msg':msg})
+        else:
+            msg = "Wrong credentials"
+            return render(request , 'cadmin/Users/login.html' , {"msg":msg})
+    return render(request , 'cadmin/Users/login.html')
+
 def job(request):
     datas =JobPortal.objects.all()
     fdata =JobPortal.objects.filter(job_type="full-time")
@@ -32,6 +57,7 @@ def job(request):
 
 def jobposting(request):
     if request.POST:
+        user = request.user
         job_title =request.POST['jobtitle'].strip()
         company_name=request.POST['companyname'].strip()
         location=request.POST['location'].strip()
@@ -40,9 +66,10 @@ def jobposting(request):
         job_type=request.POST['job-type']
         deadline=request.POST['deadline']
         jobdescription=request.POST['jobdescription'].strip()
-        data =JobPortal(job_title=job_title,company_name=company_name,job_location=location,job_category=job_category,job_package=package,job_type=job_type,job_deadline=deadline,job_description=jobdescription)
+        data =JobPortal(user=user ,job_title=job_title,company_name=company_name,job_location=location,job_category=job_category,job_package=package,job_type=job_type,job_deadline=deadline,job_description=jobdescription)
         data.save()
-        return redirect('jobposting')
+        msg = "thank you for add job!"
+        return render(request,'student\jobposting.html',{"msg":msg})
     return render(request,'student\jobposting.html')
 
 def jobsearch(request):
@@ -62,8 +89,36 @@ def jobcategory(request,id):
     return render(request,'student\jobsearch.html',{"datas":job})
 
 def details(request,id):
-    job =JobPortal.objects.get(job_id=id)
+    job =JobPortal.objects.get(id =id)
     return render(request,'student\details.html',{"data":job})
+
+
+def fulljob(request):
+    all_datas =JobPortal.objects.all()
+    paginator = Paginator(all_datas, 10)  # Show 10 datas per page
+
+    page = request.GET.get('page')
+    try:
+        datas = paginator.page(page)
+    except PageNotAnInteger:
+        datas = paginator.page(1)
+    except EmptyPage:
+        datas = paginator.page(paginator.num_pages)
+
+    return render(request,'student\Fulljobs.html',{"datas":datas})
+
+
+#user profile 
+
+# def editprofile(request):
+#     user = request.user
+#     username = user.username
+#     data=user_profile.objects.get(user=user.id)
+#     email = user.email
+#     first_name = user.first_name
+#     last_name = user.last_name
+#     return render(request,'cadmin\Users\profiledit.html',,{"data":data,'user': user, 'username': username, 'email': email, 'first_name': first_name, 'last_name': last_name})
+
 
 
 

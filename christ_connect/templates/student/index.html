@@ -13,8 +13,7 @@
                 <div class="container">
                     <div class="row justify-content-start">
                         <div class="col-10 col-lg-8">
-                            <h1 class="display-3 text-white animated slideInDown mb-4">Find The Perfect Job That
-                                You Deserved</h1>
+                            <h1 class="display-3 text-white animated slideInDown mb-4">Welcome , {{request.user.first_name}}</h1>
                             <p class="fs-5 fw-medium text-white mb-4 pb-2">Discover endless career possibilities with
                                 ChristConnect, your dedicated job portal linking students to our influential alumni
                                 network. Unlock personalized job matches, Elevate your career journey—connect, learn,
@@ -289,7 +288,7 @@
                             <div class="col-sm-12 col-md-8 d-flex align-items-center">
                                 <img class="flex-shrink-0 img-fluid border rounded"
                                     src="{% static 'student/img/com-logo-1.jpg' %}" alt="" style="width: 80px; height: 80px;">
-                                <a href="{% url 'details' id=data.job_id %}">
+                                <a href="{% url 'details' id=data.id %}">
                                 <div class="text-start ps-4">
                                     <h5 class="mb-3" style="color: black;">{{ data.job_title }}</h5>
                                     <span class="text-truncate me-3" style="color: black;"><i
@@ -313,7 +312,7 @@
                         </div>
                     </div>
                     {% endfor %}
-                    <a class="btn btn-primary py-3 px-5" href="" style="background-color: black;">Browse More Jobs</a>
+                    <a class="btn btn-primary py-3 px-5" href="{% url 'fulljob' %}" style="background-color: black;">Browse More Jobs</a>
                 </div>
                 <div id="tab-2" class="tab-pane fade show p-0">
                     {% for job in jobs %}
@@ -322,7 +321,7 @@
                             <div class="col-sm-12 col-md-8 d-flex align-items-center">
                                 <img class="flex-shrink-0 img-fluid border rounded"
                                     src="{% static 'student/img/com-logo-1.jpg' %}" alt="" style="width: 80px; height: 80px;">
-                                <a href="{% url 'details' id=job.job_id %}">
+                                <a href="{% url 'details' id=job.id %}">
                                 <div class="text-start ps-4">
                                     <h5 class="mb-3" style="color: black;">{{ job.job_title }}</h5>
                                     <span class="text-truncate me-3" style="color: black;"><i
@@ -346,7 +345,7 @@
                         </div>
                     </div>
                     {% endfor %}
-                    <!-- <a class="btn btn-primary py-3 px-5" href="% url 'alljob' %">Browse More Jobs</a> -->
+                    <a class="btn btn-primary py-3 px-5" href="{% url 'fulljob' %}" style="background-color: black;">Browse More Jobs</a>
                 </div>
                 <div id="tab-3" class="tab-pane fade show p-0">
                     {% for job in pjobs %}
@@ -355,14 +354,14 @@
                             <div class="col-sm-12 col-md-8 d-flex align-items-center">
                                 <img class="flex-shrink-0 img-fluid border rounded"
                                     src="{% static 'student/img/com-logo-1.jpg' %}" alt="" style="width: 80px; height: 80px;">
-                                <a href="{% url 'details' id=job.job_id %}">    
+                                <a href="{% url 'details' id=job.id %}">    
                                 <div class="text-start ps-4">
-                                    <h5 class="mb-3">{{ job.job_title }}</h5>
+                                    <h5 class="mb-3" style="color: black;">{{ job.job_title }}</h5>
                                     <span class="text-truncate me-3"><i
-                                            class="fa fa-map-marker-alt text-primary me-2"></i>{{ job.job_location }}</span>
-                                    <span class="text-truncate me-3"><i class="far fa-clock text-primary me-2"></i>{{ job.job_type }}</span>
-                                    <span class="text-truncate me-0"><i
-                                            class="far fa-money-bill-alt text-primary me-2"></i>{{ job.job_package }}</span>
+                                            class="fa fa-map-marker-alt me-2" style="color: black;"></i>{{ job.job_location }}</span>
+                                    <span class="text-truncate me-3" style="color: black;"><i class="far fa-clock me-2" style="color: black;"></i>{{ job.job_type }}</span>
+                                    <span class="text-truncate me-0" style="color: black;"><i
+                                            class="far fa-money-bill-alt me-2" style="color: black;"></i>{{ job.job_package }}</span>
                                 </div>
                                 </a>
                             </div>
@@ -370,16 +369,16 @@
                                 class="col-sm-12 col-md-4 d-flex flex-column align-items-start align-items-md-end justify-content-center">
                                 <div class="d-flex mb-3">
                                     <a class="btn btn-light btn-square me-3" href=""><i
-                                            class="far fa-heart text-primary"></i></a>
-                                    <a class="btn btn-primary" href="">Apply Now</a>
+                                            class="far fa-heart" style="color: black;"></i></a>
+                                    <a class="btn btn-primary" href="" style="background-color: black;">Apply Now</a>
                                 </div>
-                                <small class="text-truncate"><i class="far fa-calendar-alt text-primary me-2"></i>Date
+                                <small class="text-truncate" style="color: black;"><i class="far fa-calendar-alt me-2" style="color: black;"></i>Date
                                     Line: {{ job.job_deadline }}</small>
                             </div>
                         </div>
                     </div>
                     {% endfor %}
-                    <a class="btn btn-primary py-3 px-5" href="">Browse More Jobs</a>
+                    <a class="btn btn-primary py-3 px-5" href="{% url 'fulljob' %}" style="background-color: black;">Browse More Jobs</a>
                 </div>
             </div>
         </div>
