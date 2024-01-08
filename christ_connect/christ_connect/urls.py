@@ -16,8 +16,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from students.views import job,jobposting,jobsearch,jobcategory,details
-from cadmin.views import Dashboard,table , statuschange , edituser , user_login
+from students.views import job,jobposting,jobsearch,jobcategory,details,fulljob , user_user_login
+from cadmin.views import Dashboard,table , statuschange , edituser , user_login  
 
 urlpatterns = [
 
@@ -26,19 +26,25 @@ urlpatterns = [
 
 # Students
     path('admin/', admin.site.urls),
-    path('',job,name='job'),
+    path('',user_user_login,name='user_user_login'),
+    path('job' , job , name="job"),
     path('jobposting',jobposting,name="jobposting"),
     path('jobsearch',jobsearch,name="jobsearch"),
     path('jobcategory/<str:id>',jobcategory,name='jobcategory'),
-    path('details/<str:id>',details,name='details'),
+    path('details/<int:id>',details,name='details'),
+    path("fulljobs",fulljob,name='fulljob'),
+
+    #user
+    # path('edit',editprofile,name='edit'),
 
     # login
     path('user_login' , user_login , name="user_login"),
 
 # Admin
-    path('Dashboard', Dashboard, name = "dashboard"),
-    path('table', table, name = "table"),
-    path('statuschange/<int:user_id>' , statuschange , name="statuschange"),
-    path('edituser/<int:user_id>' , edituser , name="edituser")
+    path('cadmin/Dashboard', Dashboard, name = "dashboard"),
+    path('cadmin/table', table, name = "table"),
+    path('cadmin/statuschange/<int:user_id>' , statuschange , name="statuschange"),
+    path('cadmin/edituser/<int:user_id>' , edituser , name="edituser"),
+    path('cadmin',user_login,name='user_login'),
 
 ]

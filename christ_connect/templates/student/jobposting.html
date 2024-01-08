@@ -8,10 +8,10 @@
 <form class="row g-3" action="{% url 'jobposting' %}" method="post">
     {% csrf_token %}
     <div class="col-md-6">
-        <label for="inputEmail4" class="form-label">username</label>
-        <input type="text" class="form-control" id="inputEmail4" name="username" required>
+        <label for="inputEmail4" class="form-label"></label>
+        <input type="text" class="form-control" id="inputEmail4" name="user" value="" hidden>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-12">
         <label for="inputPassword4" class="form-label">job title</label>
         <input type="text" class="form-control" id="inputPassword4" name="jobtitle" required>
     </div>
@@ -70,5 +70,7 @@
         <button type="submit" class="btn btn-primary">post job</button>
     </div>
 </form>
+
+<h1>{{ msg }}</h1>
 
 {% endblock content %}

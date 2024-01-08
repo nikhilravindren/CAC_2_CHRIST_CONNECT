@@ -77,8 +77,10 @@
                     </div>
                     <a href="#" class="nav-item nav-link">Contact</a>
                 </div>
+                {% if request.user.is_staff %}
                 <a href="{% url 'jobposting' %}" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block" style="background-color: black;">Post A Job<i
                         class="fa fa-arrow-right ms-3"></i></a>
+                {% endif %}
             </div>
         </nav>
         <!-- Navbar End -->

@@ -39,8 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'students',
-    'cadmin',
-]
+    'cadmin',]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
