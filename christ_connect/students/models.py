@@ -21,6 +21,11 @@ class JobPortal(models.Model):
 
 
 
+#class user_posts(models.Model):
+    
+
+
+
 
 
 

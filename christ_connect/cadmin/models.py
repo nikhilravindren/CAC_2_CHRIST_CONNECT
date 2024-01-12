@@ -13,7 +13,7 @@ class user_profile(models.Model):
     ur_pin = models.IntegerField(null=True)
     ur_phone = models.BigIntegerField(null=True)
     ur_DOB = models.DateField(null=True)
-    ur_pic = models.ImageField(upload_to='image/', null=True)
+    ur_pic = models.ImageField(upload_to='images/', null=True)
     ur_bio = models.TextField(null=True)
 
 

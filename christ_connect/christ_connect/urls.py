@@ -16,8 +16,16 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from students.views import job,jobposting,jobsearch,jobcategory,details,fulljob , user_user_login
-from cadmin.views import Dashboard,table , statuschange , edituser , user_login  
+from students.views import job,jobposting,jobsearch,jobcategory,details,fulljob , user_user_login,editprofile,home,addprofile
+from cadmin.views import Dashboard,table , statuschange , edituser , user_login 
+# urls.py
+from django.conf import settings
+from django.conf.urls.static import static
+
+
+
+
+
 
 urlpatterns = [
 
@@ -35,7 +43,10 @@ urlpatterns = [
     path("fulljobs",fulljob,name='fulljob'),
 
     #user
-    # path('edit',editprofile,name='edit'),
+    path('home',home,name='home'),
+    path('edit',editprofile,name='edit'),
+    path('add',addprofile,name='add'),
+    
 
     # login
     path('user_login' , user_login , name="user_login"),
@@ -48,3 +59,5 @@ urlpatterns = [
     path('cadmin',user_login,name='user_login'),
 
 ]
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
