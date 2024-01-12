@@ -21,7 +21,19 @@ class JobPortal(models.Model):
 
 
 
-#class user_posts(models.Model):
+class user_posts(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    pt_on= models.DateTimeField(default=datetime.datetime.now)
+    pt_content = models.TextField(max_length=255, null=True, blank=True)
+    pt_media = models.FileField(upload_to='userposts/',null=True,blank=True)
+    pt_status=models.BinaryField(default=True)
+    pt_likes = models.BigIntegerField(null=True,blank=True)
+
+class post_comments(models.Model):
+    post = models.ForeignKey(user_posts, on_delete=models.CASCADE)
+    pt_comment = models.CharField(max_length=225)
+    comment_by =models.ForeignKey(User,on_delete=models.CASCADE)
+    comment_on =models.DateTimeField(default=datetime.datetime.now)
     
 
 
