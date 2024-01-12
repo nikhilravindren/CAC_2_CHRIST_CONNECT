@@ -22,16 +22,7 @@ from cadmin.views import Dashboard,table , statuschange , edituser , user_login
 from django.conf import settings
 from django.conf.urls.static import static
 
-
-
-
-
-
 urlpatterns = [
-
-    
-
-
 # Students
     path('admin/', admin.site.urls),
     path('',user_user_login,name='user_user_login'),
@@ -47,7 +38,6 @@ urlpatterns = [
     path('edit',editprofile,name='edit'),
     path('add',addprofile,name='add'),
     
-
     # login
     path('user_login' , user_login , name="user_login"),
 
