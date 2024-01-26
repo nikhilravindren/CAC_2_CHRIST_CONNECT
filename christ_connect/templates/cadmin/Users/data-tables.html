@@ -38,7 +38,8 @@
                     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h5 class="mb-0">User's list</h5> </h5>
+                                <h5 class="mb-0">User's list</h5>
+                                <center><button type="submit" class="btn btn-primary "><a href="{% url 'adduser' %}" style="color:white;">ADD USER</a></button></center>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
@@ -50,6 +51,7 @@
                                                 <th>Username</th>
                                                 <th>Email</th>
                                                 <th>User type</th>
+                                                <th>type action</th>
                                                 <th>Status</th>
                                                 <th>Action</th>
                                             </tr>
@@ -67,6 +69,13 @@
                                                     <td>Super admin</td>
                                                     {% else %}
                                                     <td>User</td>
+                                                {% endif %}
+                                                {% if i.is_staff == True and i.is_superuser == False %}
+                                                <td><button type="submit" onclick="alert('Are you sure?')" class="btn btn-primary btn-lg btn-block"><a href="{% url 'alumni' id=i.id %}" style="color:white;">remove alumni</a></button></td>
+                                                {% elif i.is_superuser == True and i.is_staff == True %}
+                                                <td><button type="submit" onclick="alert('Are you sure?')" class="btn btn-primary btn-lg btn-block"><a href="#" style="color:white;">disabled</a></button></td>
+                                                {% else %}
+                                                <td><button type="submit" onclick="alert('Are you sure?')" class="btn btn-primary btn-lg btn-block"><a href="{% url 'alumni' id=i.id %}" style="color:white;">make alumni</a></button></td>
                                                 {% endif %}
                                                 {% if i.is_active == True %}
                                                     <td>Active</td>
@@ -90,8 +99,11 @@
                     <!-- ============================================================== -->
                     <!-- end data table multiselects  -->
                     <!-- ============================================================== -->
+                
                 </div>
             </div>
+        
+
             <!-- ============================================================== -->
             <!-- footer -->
             <!-- ============================================================== -->

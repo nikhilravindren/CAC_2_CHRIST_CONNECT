@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+<!-- Scrollable modal -->
+{% for i in contact %}
+{% if i.user.id == puser.id %}
+<center><h1 style="margin-left: 10%;color:black;margin-top:5%;">thanks for applying through christ jobs!......</h1></center>
+<center><h1 style="margin-left: 10%;color:black;margin-top:5%;">{{ msg }} {{ i.ur_phone }}</h1></center>
+{% endif %}
+{% endfor %}
+
+
+{% endblock content %}

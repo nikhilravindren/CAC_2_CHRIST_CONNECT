@@ -27,7 +27,7 @@
             <div class="d-flex mb-3">
                 <a class="btn btn-light btn-square me-3" href=""><i
                         class="far fa-heart" style="color: black;"></i></a>
-                <a class="btn btn-primary" href="">Apply Now</a>
+                <a class="btn btn-primary" href="{% url 'details' id=data.id %}">Apply Now</a>
             </div>
             <small class="text-truncate" style="color: black;"><i class="far fa-calendar-alt me-2" style="color: black;"></i>Date
                 Line: {{ data.job_deadline }}</small>

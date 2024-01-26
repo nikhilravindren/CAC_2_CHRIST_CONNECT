@@ -4,15 +4,19 @@
 
 {% block content %}
 <!-- Scrollable modal -->
-<div class="modal-dialog modal-dialog-scrollable">
-  <h1>{{ data.id}}</h1>
-    <h1>{{data.job_title}}</h1>
-    <h2>{{data.job_location}}</h2>
-    <h2>{{data.job_category}}</h2>
-    <h2>{{data.job_package}}</h2>
-    <h2>{{data.job_type}}</h2>
-    <h2>{{data.job_deadline}}</h2>
-    <h2>{{data.job_description}}</h2>
+
+<div >
+    <h1 style="margin-left: 10%;color:black;margin-top:5%;">{{data.job_title|upper}}</h1>
+    <h2 style="margin-left: 10%;color:black;margin-top:5%;">company name : {{data.company_name}}</h2>
+    <h2 style="margin-left: 10%;color:black;margin-top:2%;">job location : {{data.job_location}}</h2>
+    <h2 style="margin-left: 10%;color:black;margin-top:2%;">job category : {{data.job_category}}</h2>
+    <h2 style="margin-left: 10%;color:black;margin-top:2%;">job package : {{data.job_package}}</h2>
+    <h2 style="margin-left: 10%;color:black;margin-top:2%;">job timing : {{data.job_type}}</h2>
+    <h2 style="margin-left: 10%;color:black;margin-top:2%;">deadline : {{data.job_deadline}}</h2>
+    <h3 style="margin-left: 10%;color:black;margin-top:2%;">about the job : {{data.job_description}}</h3>
+    <h3 style="margin-left: 10%;color:black;margin-top:2%;">job posted by : {{data.user.username}} ,an alumni of christ university.....</h3>
+    <h5 style="margin-left: 10%;color:black;margin-top:2%;">for get to know further or apply for this job press the contact button and talk to {{data.user.username}}</h5>
+    <a href="{% url 'applyjob' id=data.user.id %}"><button type="button" style="margin-left: 50%;color:white;margin-bottom:10%;background-color: black;padding: 1%;padding-left: 2%;padding-right: 2%;">contact</button></a>
   </div>
 
 
