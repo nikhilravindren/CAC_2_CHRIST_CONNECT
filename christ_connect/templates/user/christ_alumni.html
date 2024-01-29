@@ -7,6 +7,7 @@
 <br>
 <br>
 {% for data in datas %}
+{% if data.user.is_staff == True %}
 {% if data.user != request.user %}
 <div style="margin-left: 10%;margin-right: 10%;">
 <div class="job-item p-4 mb-4">
@@ -45,6 +46,7 @@
     </div>
 </div>
 </div>
+{% endif %}
 {% endif %}
 {% endfor %}
 <!-- Pagination -->

@@ -54,7 +54,9 @@
                                                 <th>pin number</th>
                                                 <th>phone number</th>
                                                 <th>DOB</th>
-                                                <th>biography</th>
+                                                <th>biography</th> 
+                                                <th>campus</th>
+                                                <th>course</th>
                                                 <th>profile picture</th>
                                                 <th>Actions</th>
                                             </tr>
@@ -72,6 +74,8 @@
                                                 <td>{{i.ur_phone}}</td>
                                                 <td>{{i.ur_DOB}}</td>
                                                 <td>{{i.ur_bio|truncatewords:15}}</td>
+                                                <td>{{ i.ur_campus }}</td>
+                                                <td>{{ i.ur_course }}</td>
                                                 <td><img src="{{i.ur_pic.url}}" height="100px" width="200px"></td>
                                                 <td>
                                                 

@@ -1,14 +1,15 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import JobPortal, user_posts, post_comments, post_likes,user_follow,messages
+from .models import JobPortal, user_posts, post_comments, post_likes,user_follow,messages,user_Notification
 from cadmin.models import user_profile,admin_messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.models import User
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate,logout
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from cadmin.models import Notifications
 from itertools import chain
 from operator import attrgetter
+from django.contrib.auth.hashers import make_password
 
 
 
@@ -32,6 +33,16 @@ def user_user_login(request):
             msg = "Wrong credentials"
             return render(request, 'cadmin/Users/login.html', {"msg": msg})
     return render(request, 'cadmin/Users/login.html')
+
+
+# logout view 
+
+def user_logout(request):
+    logout(request)
+    return redirect('user_user_login')
+
+
+
 
 
 # views for job portal
@@ -156,9 +167,10 @@ def home(request):
 
         posts = list(posts)
         posts.reverse()
+        noti = user_Notification.objects.filter(done_to=request.user,done_status=True)
         return render(request, 'user/home.html',
                       {'user_profile': userprofile, 'profile': profile, 'profile_exists': True, 'posts': posts,
-                       'like': a, 'likes': likes})
+                       'like': a, 'likes': likes,'noti':noti})
     else:
         profile = user_profile.objects.all()
         posts = user_posts.objects.all()
@@ -170,8 +182,9 @@ def home(request):
         print(a)
         posts = list(posts)
         posts.reverse()
+        noti = user_Notification.objects.filter(done_to=request.user,done_status=True)
         return render(request, 'user/home.html',
-                      {'profile': profile, 'profile_exists': False, 'posts': posts, 'like': a, 'likes': likes})
+                      {'profile': profile, 'profile_exists': False, 'posts': posts, 'like': a, 'likes': likes,'noti':noti})
 
 
 def editprofile(request):
@@ -198,9 +211,17 @@ def addprofile(request):
         Birthday = request.POST['Birthday']
         bio = request.POST['bio']
         image = request.FILES['image']
+        campus = request.POST['campus']
+        course = request.POST['course']
+        first = request.POST['first']
+        last = request.POST['last']
+        user = request.user
+        user.last_name = last
+        user.first_name = first
+        user.save()
         user_create = user_profile(ur_pic=image, user=request.user, ur_landmark=Landmark, ur_locality=Locality,
                                    ur_city=city, ur_state=state, ur_country=country, ur_pin=pin, ur_phone=Phone,
-                                   ur_DOB=Birthday, ur_bio=bio)
+                                   ur_DOB=Birthday, ur_bio=bio,ur_campus=campus,ur_course=course)
         user_create.save()
         user = request.user
         noti_msg = "created his profile!"
@@ -254,11 +275,17 @@ def like_post(request,id):
                 post = user_posts.objects.get(id=id)
                 post.pt_likes = post.pt_likes + 1
                 post.save()
+                user = post.user
+                msg = "liked your post"
+                user_Notification.objects.create(done_by=request.user,done_to=user,done_msg=msg)
     else:
         post.pt_likes = post.pt_likes + 1
         post.save()
         like = post_likes(post=post,liked_by=request.user,like=True)
         like.save()
+        user = post.user
+        msg = "liked your post"
+        user_Notification.objects.create(done_by=request.user,done_to=user,done_msg=msg)
 
     return redirect('home')
 
@@ -268,7 +295,12 @@ def like_post(request,id):
 
 
 def profile(request):
-    return render(request, 'user/profile.html')
+    u_profile = user_profile.objects.filter(user=request.user)
+    posts = user_posts.objects.filter(user=request.user)
+    followers = user_follow.objects.filter(followd_to=request.user)
+    following = user_follow.objects.filter(followd_by=request.user)
+    return render(request, 'user/profile.html',{'profile':u_profile,'posts':posts,'followers':followers,'following':following})                                                                                                                                                                                                                                         
+
 
 
 def comment(request, id):
@@ -282,6 +314,9 @@ def comment(request, id):
         user = request.user
         noti_msg = "commented something!"
         Notifications.objects.create(user_id=user,noti_msg=noti_msg)
+        user = post.user
+        msg = "commended on  your post"
+        user_Notification.objects.create(done_by=request.user,done_to=user,done_msg=msg)
         return redirect('home')
 
 def peoples(request):
@@ -290,7 +325,6 @@ def peoples(request):
     a=[]
     for follow in follows:
         a.append(follow["followd_to"])
-    print(a)
     paginator = Paginator(all_datas, 10)
 
     page = request.GET.get('page')
@@ -300,8 +334,9 @@ def peoples(request):
         datas = paginator.page(1)
     except EmptyPage:
         datas = paginator.page(paginator.num_pages)
+    noti = user_Notification.objects.filter(done_to=request.user,done_status=True)
 
-    return render(request, 'user/peoples.html', {'datas': datas, 'follows': a})
+    return render(request, 'user/peoples.html', {'datas': datas, 'follows': a,'noti':noti})
 
 def followes(request, id):
     followd_to = get_object_or_404(User, id=id)
@@ -314,13 +349,22 @@ def followes(request, id):
     else:
         following = user_follow(followd_by=request.user, followd_to=followd_to, follow_status=True)
         following.save()
+        user = get_object_or_404(User, id=id)
+        msg = "started following you"
+        user_Notification.objects.create(done_by=request.user,done_to=user,done_msg=msg)
 
     return redirect('peoples')
 
 
 def connections(request):
     all_datas = user_profile.objects.all()
-    followes = user_follow.objects.values('followd_to').filter(followd_by=request.user,follow_status=True)
+    followes1 = user_follow.objects.filter(followd_by=request.user,follow_status=True).values('followd_to')
+    followes2 = user_follow.objects.filter(followd_to=request.user,follow_status=True).values('followd_by')
+    a = []
+    for i in followes1:
+        a.append(i['followd_to'])
+    for j in followes2:
+        a.append(j["followd_by"])
     paginator = Paginator(all_datas, 10)
 
     page = request.GET.get('page')
@@ -330,8 +374,8 @@ def connections(request):
         datas = paginator.page(1)
     except EmptyPage:
         datas = paginator.page(paginator.num_pages)
-
-    return render(request, 'user/connections.html', {'datas': datas,'follows':followes})
+    noti = user_Notification.objects.filter(done_to=request.user,done_status=True)
+    return render(request, 'user/connections.html', {'datas': datas,'follows':a,'noti':noti})
 
 def user_message(request,id):
     message_to = User.objects.get(id=id)
@@ -347,6 +391,9 @@ def send_message(request,id):
         msg = request.POST['msg']
         message_to = User.objects.get(id=id)
         messages.objects.create(message_by=request.user,message_to=message_to,message=msg)
+        user = get_object_or_404(User, id=id)
+        msg = "messaged you something"
+        user_Notification.objects.create(done_by=request.user,done_to=user,done_msg=msg)
         return redirect('user_message',id=id)
 
 
@@ -356,6 +403,79 @@ def send_admin(request):
         subject = request.POST['a_sub']
         admin_messages.objects.create(msg_from=request.user,msg_content=msg,msg_subject=subject)
         return redirect('job')
+
+def message_show(request):
+    profile = user_profile.objects.all()
+    msg1 = messages.objects.filter(message_by=request.user).values("message_to")
+    msg2 = messages.objects.filter(message_to=request.user).values("message_by")
+
+    a = []
+    for i in  msg1:
+        a.append(i["message_to"])
+    for j in msg2:
+        a.append(j["message_by"])
+    noti = user_Notification.objects.filter(done_to=request.user,done_status=True)
+    return render(request,"user/messagebox.html",{"datas":profile,"msgs":a,'noti':noti})
+
+
+def noti_delete(request,id):
+    noti = user_Notification.objects.get(id=id)
+    noti.done_status = False
+    noti.save()
+    return redirect('home')
+
+
+def alumni_group(request):
+    all_datas = user_profile.objects.filter()
+    follows = user_follow.objects.filter(followd_by=request.user, follow_status=True).values('followd_to')
+    a=[]
+    for follow in follows:
+        a.append(follow["followd_to"])
+    paginator = Paginator(all_datas, 10)
+
+    page = request.GET.get('page')
+    try:
+        datas = paginator.page(page)
+    except PageNotAnInteger:
+        datas = paginator.page(1)
+    except EmptyPage:
+        datas = paginator.page(paginator.num_pages)
+    noti = user_Notification.objects.filter(done_to=request.user,done_status=True)
+
+    return render(request, 'user\christ_alumni.html', {'datas': datas, 'follows': a,'noti':noti})
+
+
+# new account register
+
+def create_ac(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        if User.objects.filter(username=username).exists():
+            msg = 'this username already exists!....'
+            return render(request,'cadmin/Users/register.html',{'msg':msg})
+        else:
+            password = request.POST['password']
+            cpassword = request.POST['cpassword']
+            if password == cpassword:
+                hashed_password = make_password(password)
+                email = request.POST['email']
+                if request.POST['status'] == 'Alumni':
+                    status = True
+                elif request.POST['status'] == 'Student':
+                    status = False
+                User.objects.create(username=username,password=hashed_password,email=email,is_staff=status)
+                user = user = get_object_or_404(User, username=username)
+                noti_msg = "joined to christ connect!"
+                Notifications.objects.create(user_id=user,noti_msg=noti_msg)
+            else:
+                msg = "password and confirm password doesn't match!.. "
+                return render(request,'cadmin/Users/register.html',{'msg':msg})
+            return redirect('user_user_login')
+
+
+    return render(request,'cadmin/Users/register.html')
+    
+
 
 
     

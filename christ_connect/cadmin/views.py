@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate , login
 from django.contrib.auth.decorators import login_required
 from .models import user_profile,Notifications,admin_messages
-from students.models import JobPortal,user_posts,post_likes,post_comments,user_follow,messages
+from students.models import JobPortal,user_posts,post_likes,post_comments,user_follow,messages,user_Notification
 
 
 # Admin Panel
@@ -118,6 +118,8 @@ def edit_profile(request ,id):
         user.ur_phone = request.POST.get('ur_phone')
         user.ur_DOB = request.POST.get('ur_DOB')
         user.ur_bio = request.POST.get('ur_bio')
+        user.ur_course = request.POST.get('course')
+        user.ur_campus = request.POST.get('campus')
         if 'ur_pic' in request.FILES and request.FILES['ur_pic'].size > 0:
             user.ur_pic = request.FILES['ur_pic']
         elif 'old' in request.POST and request.POST['old']:
@@ -223,9 +225,11 @@ def profileadd(request):
             Birthday = request.POST['Birthday']
             bio = request.POST['bio']
             image = request.FILES['image']
+            campus = request.POST['campus']
+            course = request.POST['course']
             user_create = user_profile(ur_pic=image, user=user, ur_landmark=Landmark, ur_locality=Locality,
                                     ur_city=city, ur_state=state, ur_country=country, ur_pin=pin, ur_phone=Phone,
-                                    ur_DOB=Birthday, ur_bio=bio)
+                                    ur_DOB=Birthday, ur_bio=bio,ur_campus=campus,ur_course=course)
             user_create.save()
             return redirect('profiletable')
         else:
@@ -293,6 +297,12 @@ def solve(request,id):
          adminmsg.msg_status = True
     adminmsg.save()
     return redirect('admin_msg')
+
+
+def unoti_table(request):
+    noti = user_Notification.objects.all()
+    return render(request,'cadmin/Users/notification.html',{'notification':noti})
+
 
 
 

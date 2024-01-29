@@ -41,10 +41,10 @@
                         <!-- Accordion -->
                         <div class="w3-card w3-round">
                             <div class="w3-white">
-                                <button onclick="myFunction('Demo1')" class="w3-button w3-block w3-black w3-left-align">
+                                <a href="{% url 'alumni_group' %}"><button class="w3-button w3-block w3-black w3-left-align">
                                     <i
-                                            class="fa fa-circle-o-notch fa-fw w3-margin-right"></i> My Groups
-                                </button>
+                                            class="fa fa-circle-o-notch fa-fw w3-margin-right"></i>Christ Alumni
+                                </button></a>
                                 <div id="Demo1" class="w3-hide w3-container">
                                     <p>Some text..</p>
                                 </div>
@@ -179,15 +179,15 @@
                                 {% for uprofile in profile %}
                                     {% if post.user.username == uprofile.user.username %}
                                         <img src="{{ uprofile.ur_pic.url }}"
-                                             class="w3-left w3-circle w3-margin-right" style="width:60px"
+                                             class="w3-left w3-circle w3-margin-right" style="width:60px;height: 60px;"
                                              alt="Avatar">
                                         </p>
                                     {% endif %}
                                 {% endfor %}
                             {% if post.user.username == user.username %}
-                                <p style="font-size:x-large;margin-left: 10%;">you</p>
+                                <p style="font-size:x-large;margin-left: 0%;margin-top: 0%;">you</p>
                             {% else %}
-                                <p style="font-size:x-large;margin-left: 10%;">{{ post.user.username }}</p>
+                                <p style="font-size:x-large;margin-left: 0%;">{{ post.user.username }}</p>
                             {% endif %}
                             {% if '.mp4' in post.pt_media.url %}
                                 <video width="100%" height="50%" controls>
@@ -200,7 +200,7 @@
                             <span class="w3-right w3-opacity">posted on : {{ post.pt_on }}</span>
                             <h4>{{ post.pt_content }}</h4><br>
                             <hr class="w3-clear">
-                            <p style="color: blue;">{{ post.pt_likes }} likes {{ post.pt_comment }} comments</p>
+                            <p style="color: rgb(0, 0, 8);">{{ post.pt_likes }} likes {{ post.pt_comment }} comments</p>
 
 
 

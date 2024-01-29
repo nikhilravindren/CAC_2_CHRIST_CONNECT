@@ -58,6 +58,14 @@ class messages(models.Model):
 
 
 
+class user_Notification(models.Model):
+    done_by = models.ForeignKey(User,related_name='done_from', on_delete = models.CASCADE, default=0)
+    done_to = models.ForeignKey(User,related_name='done_to', on_delete = models.CASCADE, default=0)
+    done_msg = models.CharField(max_length=255)
+    done_status = models.BooleanField(default=1)
+    done_on = models.DateTimeField(default=datetime.datetime.now)
+
+
     
 
 

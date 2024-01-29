@@ -16,7 +16,8 @@ class user_profile(models.Model):
     ur_DOB = models.DateField(null=True)
     ur_pic = models.ImageField(upload_to='images/', null=True)
     ur_bio = models.TextField(null=True)
-
+    ur_course = models.CharField(max_length=220,null=True)
+    ur_campus = models.CharField(max_length=220,null=True)
 class Notifications(models.Model):
     user_id = models.ForeignKey(User, on_delete = models.CASCADE, default=0)
     noti_msg = models.CharField(max_length=255)

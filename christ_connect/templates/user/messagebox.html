@@ -7,44 +7,35 @@
 <br>
 <br>
 {% for data in datas %}
-{% if data.user != request.user %}
+{% if data.user.id in msgs %}
 <div style="margin-left: 10%;margin-right: 10%;">
+    <a  href="{% url 'user_message' id=data.user.id %}">
 <div class="job-item p-4 mb-4">
     <div class="row g-4">
         <div class="col-sm-12 col-md-8 d-flex align-items-center">
             <img class="flex-shrink-0 img-fluid border rounded"
                 src="{{data.ur_pic.url}}" alt="" style="width: 80px; height: 80px;">
-                <a href="">
             <div class="text-start ps-4">
                 <h2 class="mb-3" style="color: black;">{{ data.user.username|upper }}</h2>
-                <span class="text-truncate me-3" style="color: black;"><h4 style="color: black;">{{ data.ur_course }} from {{ data.ur_campus }}</h4></span>
-                <span class="text-truncate " style="color: black;"><h4 style="color: black;">{{ data.ur_city }},{{ data.ur_state }},{{ data.ur_country }}</h4></span>
-                <span class="text-truncate " style="color: black;"><h5 style="color: black;">ABOUT ME:{{ data.ur_bio|truncatechars:30 }}</h5></span>
+                <span class=" me-2" style="color: black;"><h4 style="color: black;">{{ data.ur_course }} from {{ data.ur_campus }}</h4></span>
+                <span  style="color: black;"><h4 style="color: black;">{{ data.ur_city }},{{ data.ur_state }},{{ data.ur_country }}</h4></span>
+                <span class="text-truncate me-2" style="color: black;"><h5 style="color: black;">ABOUT ME:{{ data.ur_bio|truncatechars:30 }}</h5></span>
                 <span class="text-truncate me-0" style="color: black;"></span>
             </div>
-          </a>
         </div>
         <div
             class="col-sm-12 col-md-4 d-flex flex-column align-items-start align-items-md-end justify-content-center">
-            <div class="d-flex mb-3">
-                <a class="btn btn-light btn-square me-3" href=""><i
-                        class="" style="color: black;"></i></a>
-                {% if follows %}
-                {% if data.user.id in follows %}  
-                <a class="btn btn-primary" href="{% url 'follow' id=data.user.id %}" >UNFOLLOW</a>
-                {% else %}
-                <a class="btn btn-primary" href="{% url 'follow' id=data.user.id %}" >FOLLOW</a>
-                {% endif %}
-                {% else %}
-                <a class="btn btn-primary" href="{% url 'follow' id=data.user.id %}">FOLLOW</a>
-                {% endif %}
+            <div class="d-flex mb-3"><i
+                        class="" style="color: black;"></i>
             </div>
             <small class="text-truncate" style="color: black;"><i class="" style="color: black;"></i>
                 </small>
         </div>
     </div>
 </div>
+</a>
 </div>
+
 {% endif %}
 {% endfor %}
 <!-- Pagination -->
