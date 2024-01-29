@@ -1,0 +1,81 @@
+{%  extends 'adminbase.html' %}
+{% block content %}
+        <!-- ============================================================== -->
+        <!-- end left sidebar -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- wrapper  -->
+        <!-- ============================================================== -->
+        <div class="dashboard-wrapper">
+            <div class="container-fluid  dashboard-content">
+                <!-- ============================================================== -->
+                <!-- pageheader -->
+                <!-- ============================================================== -->
+                <div class="row">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                        <div class="page-header">
+                            <h2 class="pageheader-title">user_notification Table</h2>
+                            <div class="page-breadcrumb">
+                                <nav aria-label="breadcrumb">
+                                    <ol class="breadcrumb">
+                                        <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Dashboard</a></li>
+                                        <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Tables</a></li>
+                                        <li class="breadcrumb-item active" aria-current="page">user_notification Table</li>
+                                    </ol>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- ============================================================== -->
+                <!-- end pageheader -->
+                <!-- ============================================================== -->
+
+                <div class="row">
+                    <!-- ============================================================== -->
+                    <!-- data table multiselects  -->
+                    <!-- ============================================================== -->
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="mb-0">notification  list</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table id="example3" class="table table-striped table-bordered" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>done_by</th>
+                                                <th>done_to</th>
+                                                <th>done_msg</th>
+                                                <th>done_on</th>
+                                                <th>done_status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for i in notification %}
+                                            <tr>
+                                                <td>{{i.done_by.username}}</td>
+                                                <td>{{i.done_to.username}}</td>
+                                                <td>{{ i.done_msg }}</td>
+                                                <td>{{i.done_on}}</td>
+                                                <td>{{i.done_status}}</td>
+                                            </tr>
+                                            {% endfor %}
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- ============================================================== -->
+                    <!-- end data table multiselects  -->
+                    <!-- ============================================================== -->
+                
+                </div>
+            </div>
+        
+
+            <!-- ============================================================== -->
+            <!-- footer -->
+            <!-- ============================================================== -->
+{% endblock content %}

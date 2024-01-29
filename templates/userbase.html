@@ -1,0 +1,132 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+<title>christ connect</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Inter:wght@700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="{% static 'student/lib/animate/animate.min.css' %}" rel="stylesheet">
+    <link href="{% static 'student/lib/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="{% static 'student/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="{% static 'student/css/style.css' %}" rel="stylesheet">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-blue-grey.css">
+<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans'>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
+</style>
+</head>
+<body class="w3-theme-l5">
+
+<!-- Navbar -->
+<div class="w3-top ">
+ <div class="w3-bar w3-black w3-left-align w3-xlarge">
+  <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-theme-d2" href="javascript:void(0);" onclick="openNav()"><i class="fa fa-bars"></i></a>
+  <a href="{% url 'home' %}" class="w3-bar-item w3-button w3-padding-large w3-black"><i class="fa fa-home w3-margin-right" style='font-size:24px'></i>HOME</a>
+  <a href="{% url 'peoples' %}" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="News"><i class="fa fa-globe" style='font-size:24px'></i>PEOPLES</a>
+  <a href="{% url 'connections' %}" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="christ jobs"><i class='fas fa-handshake' style='font-size:24px'></i>CONNECTIONS</a>
+  <a href="{% url 'job' %}" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="christ jobs"><i class='fas fa-briefcase' style='font-size:24px'></i>CHRIST JOBS</a>
+  <a href="{% url 'message_show' %}" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Messages"><i class="fa fa-envelope" style='font-size:24px'></i>MESSAGES</a>
+  <div class="w3-dropdown-hover w3-hide-small">
+    <button class="w3-button w3-padding-large" title="Notifications"><i class="fa fa-bell"></i><span class="w3-badge w3-right w3-small w3-green">{{ noti|length }}</span></button>     
+    <div class="w3-dropdown-content w3-card-4 w3-bar-block" style="width:300px">
+      {% for i in noti %}
+      <a href="{% url 'noti_delete' id=i.id %}" class="w3-bar-item w3-button">{{ i.done_by.username }},{{ i.done_msg }}</a>
+      {% endfor %}
+    </div>
+  </div>
+  <a href="#" class="w3-bar-item w3-button w3-hide-small w3-right w3-padding-large w3-hover-white" title="My Account">
+    <img src="{% static 'user\images\logo.jpg' %}" class="w3-circle" style="height:50px;width:50px" alt="Avatar">
+  </a>
+  <a href="{% url 'user_logout' %}" class="w3-bar-item w3-button w3-hide-small w3-right w3-padding-large w3-hover-white">LOGOUT</a>
+ </div>
+</div>
+
+<!-- Navbar on small screens -->
+<div id="navDemo" class="w3-bar-block w3-theme-d2 w3-hide w3-hide-large w3-hide-medium w3-large">
+  <a href="#" class="w3-bar-item w3-button w3-padding-large">Link 1</a>
+  <a href="#" class="w3-bar-item w3-button w3-padding-large">Link 2</a>
+  <a href="#" class="w3-bar-item w3-button w3-padding-large">Link 3</a>
+  <a href="#" class="w3-bar-item w3-button w3-padding-large">My Profile</a>
+</div>
+
+  
+    {% block content %}
+
+
+    {% endblock content %}
+<!-- Footer -->
+<footer class="w3-container w3-black w3-padding-16">
+  <center>
+  <div class="col-lg-3 col-md-6">
+    <h5 class="text-white mb-4">feedback</h5>
+    <p>give us your valuable feedback</p>
+    <form action="{% url 'send_admin' %}" method="post">
+        {% csrf_token %}
+    <div class="mx-auto" style="max-width: 400px;">
+        <input type="text" class="form-control bg-transparent w-100 py-3 ps-4 pe-5" placeholder="subject" name="a_sub">
+        <br>
+        <input class="form-control bg-transparent w-100 py-3 ps-4 pe-5" type="text" name="a_msg"
+            placeholder="feedback">
+            <br>
+        <button type="submit"
+            class="btn btn-primary py-2  top-0 end-0 mt-2 me-2">submit</button>
+    </div>
+    </form>
+</div>
+</center>
+  
+</footer>
+
+<footer class="w3-container w3-black">
+  <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">christ connect</a></p>
+</footer>
+
+<script>
+// Accordion
+function myFunction(id) {
+  var x = document.getElementById(id);
+  if (x.className.indexOf("w3-show") == -1) {
+    x.className += " w3-show";
+    x.previousElementSibling.className += " w3-theme-d1";
+  } else { 
+    x.className = x.className.replace("w3-show", "");
+    x.previousElementSibling.className = 
+    x.previousElementSibling.className.replace(" w3-theme-d1", "");
+  }
+}
+
+// Used to toggle the menu on smaller screens when clicking on the menu button
+function openNav() {
+  var x = document.getElementById("navDemo");
+  if (x.className.indexOf("w3-show") == -1) {
+    x.className += " w3-show";
+  } else { 
+    x.className = x.className.replace(" w3-show", "");
+  }
+}
+</script>
+
+</body>
+</html> 

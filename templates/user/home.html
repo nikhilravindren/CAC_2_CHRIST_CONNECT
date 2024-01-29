@@ -1,0 +1,298 @@
+{% extends 'userbase.html' %}
+{% load static %}
+{% block content %}
+
+    <!-- Page Container -->
+    <div class="w3-container w3-content" style="max-width:2000px;margin-top:80px">
+        <!-- The Grid -->
+        <div class="w3-row">
+            <!-- Left Column -->
+            <div style="position: fixed;margin-left: 3%;">
+                <div class="w3-col m12">
+                    <!-- Profile -->
+                    {% if profile_exists %}
+                        <div class="w3-card w3-round w3-white">
+                            <div class="w3-container">
+                                <h4 class="w3-center">{{ user_profile.user.username }}</h4>
+                                <p class="w3-center"><img src="{{ user_profile.ur_pic.url }}" class="w3-circle"
+                                                          style="height:106px;width:106px" alt="Avatar"></p>
+                                <hr>
+                                <p>
+                                    <i class="fa fa-home fa-fw w3-margin-right w3-text-theme"></i>{{ user_profile.ur_landmark }}
+                                    , {{ user_profile.ur_city }}</p>
+
+                                <p>
+                                    <i class="fa fa-home fa-fw w3-margin-right w3-text-theme"></i>{{ user_profile.ur_state }}
+                                    , {{ user_profile.ur_country }}</p>
+
+                                <p>
+                                    <i class="fa fa-birthday-cake fa-fw w3-margin-right w3-text-theme"></i>{{ user_profile.ur_DOB }}
+                                </p>
+                                <br>
+                                <button class="w3-button w3-block w3-black w3-left-align">
+                                    <center>
+                                        <a href="{% url 'profile' %}" style="text-decoration: none;">VIEW PROFILE</a>
+                                </button>
+                                </center>
+                                <br>
+                            </div>
+                        </div>
+                        <br>
+                        <!-- Accordion -->
+                        <div class="w3-card w3-round">
+                            <div class="w3-white">
+                                <a href="{% url 'alumni_group' %}"><button class="w3-button w3-block w3-black w3-left-align">
+                                    <i
+                                            class="fa fa-circle-o-notch fa-fw w3-margin-right"></i>Christ Alumni
+                                </button></a>
+                                <div id="Demo1" class="w3-hide w3-container">
+                                    <p>Some text..</p>
+                                </div>
+                                <br>
+                                <button onclick="myFunction('Demo2')" class="w3-button w3-block w3-black w3-left-align">
+                                    <i
+                                            class="fa fa-calendar-check-o fa-fw w3-margin-right"></i> My Events
+                                </button>
+                                <div id="Demo2" class="w3-hide w3-container">
+                                    <p>Some other text..</p>
+                                </div>
+                                <br>
+                                <button onclick="myFunction('Demo3')" class="w3-button w3-block w3-black w3-left-align">
+                                    <i
+                                            class="fa fa-users fa-fw w3-margin-right"></i> My Photos
+                                </button>
+                                <div id="Demo3" class="w3-hide w3-container">
+                                    <div class="w3-row-padding">
+                                        <br>
+                                        <div class="w3-half">
+                                            <img src="/w3images/lights.jpg" style="width:100%" class="w3-margin-bottom">
+                                        </div>
+                                        <div class="w3-half">
+                                            <img src="/w3images/nature.jpg" style="width:100%" class="w3-margin-bottom">
+                                        </div>
+                                        <div class="w3-half">
+                                            <img src="/w3images/mountains.jpg" style="width:100%"
+                                                 class="w3-margin-bottom">
+                                        </div>
+                                        <div class="w3-half">
+                                            <img src="/w3images/forest.jpg" style="width:100%" class="w3-margin-bottom">
+                                        </div>
+                                        <div class="w3-half">
+                                            <img src="/w3images/nature.jpg" style="width:100%" class="w3-margin-bottom">
+                                        </div>
+                                        <div class="w3-half">
+                                            <img src="/w3images/snow.jpg" style="width:100%" class="w3-margin-bottom">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+
+                    {% else %}
+                        <div class="w3-card w3-round w3-white">
+                            <div class="w3-container">
+                                <h4 class="w3-center"></h4>
+                                
+                                <button class="w3-button w3-block w3-black w3-left-align">
+                                    
+                                        <a href="{% url 'add' %}" style="text-decoration: none;"><center>CREATE PROFILE</center></a>
+                                </button>
+                                
+                                <br>
+                                <!-- <p class="w3-center"><img src="" class="w3-circle" style="height:106px;width:106px" alt="Avatar"></p>
+                             <hr>
+                             <p><i class="fa fa-pencil fa-fw w3-margin-right w3-text-theme"></i> </p>
+                             <p><i class="fa fa-home fa-fw w3-margin-right w3-text-theme"></i></p>
+                             <p><i class="fa fa-birthday-cake fa-fw w3-margin-right w3-text-theme"></i></p> -->
+                            </div>
+                        </div>
+                        <br>
+
+
+                    {% endif %}
+                    <!-- Interests -->
+                    <!-- <div class="w3-card w3-round w3-white w3-hide-small">
+                    <div class="w3-container">
+                      <p>Interests</p>
+                      <p>
+                        <span class="w3-tag w3-small w3-black">News</span>
+                        <span class="w3-tag w3-small w3-black">W3Schools</span>
+                        <span class="w3-tag w3-small w3-black">Labels</span>
+                        <span class="w3-tag w3-small w3-black">Games</span>
+                        <span class="w3-tag w3-small w3-black">Friends</span>
+                        <span class="w3-tag w3-small w3-black">Games</span>
+                        <span class="w3-tag w3-small w3-black">Friends</span>
+                        <span class="w3-tag w3-small w3-black">Food</span>
+                        <span class="w3-tag w3-small w3-black">Design</span>
+                        <span class="w3-tag w3-small w3-black">Art</span>
+                        <span class="w3-tag w3-small w3-black">Photos</span>
+                      </p>
+                    </div>
+                  </div>
+                  <br> -->
+
+                    <!-- Alert Box -->
+                    <div
+                            class="w3-container w3-display-container w3-round w3-theme-d5 w3-border w3-theme-border w3-margin-bottom w3-hide-small">
+          <span onclick="this.parentElement.style.display='none'" class="w3-button w3-theme-d5 w3-display-topright">
+            <i class="fa fa-remove"></i>
+          </span>
+                        <p><strong>Hey!</strong></p>
+                        <p>People are looking at your profile. Find out who.</p>
+                    </div>
+
+                    <!-- End Left Column -->
+                </div>
+            </div>
+
+            <!-- Middle Column -->
+            <div style="margin-left: 30%;margin-right: 3%;">
+                <div class="w3-col m12">
+                    <form action="{% url 'post' %}" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="w3-row-padding">
+                            <div class="w3-col m12">
+                                <div class="w3-card w3-round w3-white">
+                                    <div class="w3-container w3-padding">
+                                        <h6 class="w3-opacity">post your things...</h6>
+                                        <p contenteditable="true" class="w3-border w3-padding"><input type="file"
+                                                                                                      name="mediapost">
+                                        </p>
+                                        <p contenteditable="true" class="w3-border w3-padding"><textarea name="content"
+                                                                                                         id="" cols="110"
+                                                                                                         rows="5"
+                                                                                                         required></textarea>
+                                        </p>
+                                        <button type="submit" class="w3-button w3-black"><i class="fa fa-pencil"></i>
+                                             Post
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    {% for post in posts %}
+                    {% if post.pt_status == True %}
+                        <div class="w3-container w3-card w3-white w3-round w3-margin"><br>
+                            <p class="w3-center">
+                                {% for uprofile in profile %}
+                                    {% if post.user.username == uprofile.user.username %}
+                                        <img src="{{ uprofile.ur_pic.url }}"
+                                             class="w3-left w3-circle w3-margin-right" style="width:60px;height: 60px;"
+                                             alt="Avatar">
+                                        </p>
+                                    {% endif %}
+                                {% endfor %}
+                            {% if post.user.username == user.username %}
+                                <p style="font-size:x-large;margin-left: 0%;margin-top: 0%;">you</p>
+                            {% else %}
+                                <p style="font-size:x-large;margin-left: 0%;">{{ post.user.username }}</p>
+                            {% endif %}
+                            {% if '.mp4' in post.pt_media.url %}
+                                <video width="100%" height="50%" controls>
+                                    <source src="{{ post.pt_media.url }}" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                            {% else %}
+                                <img src="{{ post.pt_media.url }}" alt="img" class="" style="width:100%;height:50%">
+                            {% endif %}
+                            <span class="w3-right w3-opacity">posted on : {{ post.pt_on }}</span>
+                            <h4>{{ post.pt_content }}</h4><br>
+                            <hr class="w3-clear">
+                            <p style="color: rgb(0, 0, 8);">{{ post.pt_likes }} likes {{ post.pt_comment }} comments</p>
+
+
+
+                        
+                        {% if post.id in like %}
+                                    <a href="{% url 'like' id=post.id %}" style="text-decoration: none;">
+                                            <button type="submit" class="w3-button w3-red w3-margin-bottom"><i
+                                                    class="fa fa-thumbs-down"></i>Unlike
+                                            </button>
+                                        </a> 
+                        {% else %}
+                                        <a href="{% url 'like' id=post.id %}" style="text-decoration: none;">
+                                            <button type="submit" class="w3-button w3-green w3-margin-bottom"><i
+                                                    class="fa fa-thumbs-up"></i>Like
+                                            </button>
+                                        </a>
+                        {% endif %}       
+                                    
+
+
+                            <!-- <div style="margin-left: 5%;"> -->
+                            <form action="{% url 'comment' id=post.id %}" enctype="multipart/form-data"
+                                  method="post">
+                                {% csrf_token %}
+                                <textarea name="comment" id="" cols="90" rows="1.5" required
+                                          placeholder="write your comments here....."></textarea>
+                                <button type="submit" class="w3-button w3-black w3-margin-bottom">comment</button>
+                            </form>
+                            <!-- </div>  -->
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+
+
+                    <!-- End Middle Column -->
+                </div>
+            </div>
+
+            <!-- Right Column -->
+            <!-- <div style="position: fixed;margin-left: 85%;">
+                <div class="w3-col m12">
+                    <div class="w3-card w3-round w3-white w3-center">
+                        <div class="w3-container">
+                            <p>Upcoming Events:</p>
+                            <img src="/w3images/forest.jpg" alt="Forest" style="width:100%;">
+                            <p><strong>Holiday</strong></p>
+                            <p>Friday 15:00</p>
+                            <p>
+                                <button class="w3-button w3-block w3-black">Info</button>
+                            </p>
+                        </div>
+                    </div>
+                    <br>
+
+                    <div class="w3-card w3-round w3-white w3-center">
+                        <div class="w3-container">
+                            <p>Friend Request</p>
+                            <img src="/w3images/avatar6.png" alt="Avatar" style="width:50%"><br>
+                            <span>Jane Doe</span>
+                            <div class="w3-row w3-opacity">
+                                <div class="w3-half">
+                                    <button class="w3-button w3-block w3-green w3-section" title="Accept"><i
+                                            class="fa fa-check"></i></button>
+                                </div>
+                                <div class="w3-half">
+                                    <button class="w3-button w3-block w3-red w3-section" title="Decline"><i
+                                            class="fa fa-remove"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+
+                    <div class="w3-card w3-round w3-white w3-padding-16 w3-center">
+                        <p>ADS</p>
+                    </div>
+                    <br>
+
+                     <div class="w3-card w3-round w3-white w3-padding-32 w3-center">
+                    <p><i class="fa fa-bug w3-xxlarge"></i></p>
+                  </div>
+                </div> -->
+                <!-- End Right Column -->
+            </div>
+
+
+            <!-- End Grid -->
+        </div>
+
+        <!-- End Page Container -->
+    </div>
+    <br>
+
+
+{% endblock content %}
