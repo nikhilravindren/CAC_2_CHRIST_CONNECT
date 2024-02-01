@@ -149,29 +149,6 @@
             <!-- Middle Column -->
             <div style="margin-left: 30%;margin-right: 3%;">
                 <div class="w3-col m12">
-                    <form action="{% url 'post' %}" method="post" enctype="multipart/form-data">
-                        {% csrf_token %}
-                        <div class="w3-row-padding">
-                            <div class="w3-col m12">
-                                <div class="w3-card w3-round w3-white">
-                                    <div class="w3-container w3-padding">
-                                        <h6 class="w3-opacity">post your things...</h6>
-                                        <p contenteditable="true" class="w3-border w3-padding"><input type="file"
-                                                                                                      name="mediapost">
-                                        </p>
-                                        <p contenteditable="true" class="w3-border w3-padding"><textarea name="content"
-                                                                                                         id="" cols="110"
-                                                                                                         rows="5"
-                                                                                                         required></textarea>
-                                        </p>
-                                        <button type="submit" class="w3-button w3-black"><i class="fa fa-pencil"></i>
-                                             Post
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
                     {% for post in posts %}
                     {% if post.pt_status == True %}
                         <div class="w3-container w3-card w3-white w3-round w3-margin"><br>

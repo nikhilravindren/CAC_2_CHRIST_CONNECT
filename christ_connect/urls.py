@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from students.views import job,jobposting,jobsearch,jobcategory,details,fulljob , user_user_login,editprofile,home,addprofile,posts,profile,like_post,comment,peoples,followes,connections,applyjob,user_message,send_message,about,send_admin,message_show,user_logout,noti_delete,create_ac,alumni_group
+from students.views import job,jobposting,jobsearch,jobcategory,details,fulljob , user_user_login,editprofile,home,addprofile,posts,profile,like_post,comment,peoples,followes,connections,applyjob,user_message,send_message,about,send_admin,message_show,user_logout,noti_delete,create_ac,alumni_group,poststatus
                              
 from cadmin.views import Dashboard,table , statuschange , edituser , user_login ,deleteprofile,profiletable,jobtable,deletejob,posttable,post_status,liketable,likestatus,comment_table,deletecomment,profileadd,adduser,edit_profile,noti_change,noti_table,notifi_change,alumni,jobedit,follow_bridge,unfollow,msg_delete,msg_table,admin_msg,solve,unoti_table
 # urls.py
@@ -54,6 +54,7 @@ urlpatterns = [
     path('message_show',message_show, name='message_show'),
     path('noti_delete/<int:id>',noti_delete, name='noti_delete'),
     path('alumni',alumni_group,name='alumni_group'),
+    path('cadmin/post_status/<int:id>',poststatus, name='post_status'),
     
     # login
     path('user_login' , user_login , name="user_login"),

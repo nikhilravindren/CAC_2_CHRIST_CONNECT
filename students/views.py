@@ -194,8 +194,28 @@ def editprofile(request):
     email = user.email
     first_name = user.first_name
     last_name = user.last_name
+    if request.method == "POST":
+        data.ur_landmark = request.POST.get('landmark')
+        data.ur_locality = request.POST.get('locality')
+        data.ur_city = request.POST.get('city')
+        data.ur_state = request.POST.get('state')
+        data.ur_country = request.POST.get('country')
+        data.ur_pin = request.POST.get('pin')
+        data.ur_phone = request.POST.get('phone')
+        data.ur_DOB = request.POST.get('DOB')
+        data.ur_bio = request.POST.get('bio')
+        data.ur_course = request.POST.get('course')
+        data.ur_campus = request.POST.get('campus')
+        user.email = request.POST.get('mail')
+        user.save()
+        if 'ur_pic' in request.FILES and request.FILES['ur_pic'].size > 0:
+            data.ur_pic = request.FILES['ur_pic']
+        elif 'old' in request.POST and request.POST['old']:
+            data.ur_pic = request.POST['old']
+        data.save()
+        return redirect('profile')
     return render(request, "user/profiledit.html",
-                  {"data": data, 'user': user, 'username': username, 'email': email, 'first_name': first_name,
+                  {"data": data,'username': username, 'email': email, 'first_name': first_name,
                    'last_name': last_name})
 
 
@@ -297,8 +317,8 @@ def like_post(request,id):
 def profile(request):
     u_profile = user_profile.objects.filter(user=request.user)
     posts = user_posts.objects.filter(user=request.user)
-    followers = user_follow.objects.filter(followd_to=request.user)
-    following = user_follow.objects.filter(followd_by=request.user)
+    followers = user_follow.objects.filter(followd_to=request.user,follow_status=True).count()
+    following = user_follow.objects.filter(followd_by=request.user,follow_status=True).count()
     return render(request, 'user/profile.html',{'profile':u_profile,'posts':posts,'followers':followers,'following':following})                                                                                                                                                                                                                                         
 
 
@@ -474,6 +494,16 @@ def create_ac(request):
 
 
     return render(request,'cadmin/Users/register.html')
+
+def poststatus(request,id):
+    post =user_posts.objects.get(id = id)
+    if post.pt_status == True:
+        post.pt_status = False
+        post.save()
+    else:
+        post.pt_status =True
+        post.save()
+    return redirect('profile')
     
 
 
