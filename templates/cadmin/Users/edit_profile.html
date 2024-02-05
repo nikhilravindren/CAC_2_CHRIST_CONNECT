@@ -45,7 +45,14 @@
 
 <div class="col-md-6">
 <label class="small mb-1" for="LastName">campus</label>
-<input class="form-control" id="LastName" type="text" placeholder="" value="{{ profile.ur_campus }}" name="campus">
+<select name="campus" id="country" class="form-control">
+    <option selected>{{profile.ur_campus}}</option>
+    <option >Central Campus</option>
+    <option >Bannerghatta Campus</option>
+    <option >Kengeri Campus</option>
+    <option >Delhi Campus</option>
+    <option >Lavasa campus</option>
+</select>
 </div>
 </div>
 

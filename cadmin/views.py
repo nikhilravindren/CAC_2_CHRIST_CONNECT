@@ -1,9 +1,12 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate , login
+from django.contrib.auth import authenticate , login,logout
 from django.contrib.auth.decorators import login_required
 from .models import user_profile,Notifications,admin_messages
 from students.models import JobPortal,user_posts,post_likes,post_comments,user_follow,messages,user_Notification
+from django.db.models import Count,Sum,Value
+from django.db.models.functions import Coalesce
+
 
 
 # Admin Panel
@@ -25,6 +28,10 @@ def user_login(request):
             return render(request , 'cadmin/Users/login.html' , {"msg":msg})
     return render(request , 'cadmin/Users/login.html')
 
+def u_logout(request):
+    logout(request)
+    return redirect('user_login')
+
     
 
 @login_required(login_url = 'user_login')
@@ -36,7 +43,38 @@ def Dashboard(request):
     job_count = JobPortal.objects.count()
     like_count = post_likes.objects.count()
     comment_count = post_comments.objects.count()
-    return render(request, 'cadmin/index.html',{'profile':profile,'notification':notification,'user_count':user_count,'post_count':post_count,'job_count':job_count,'like_count':like_count,'comment_count':comment_count})
+    most_liked_items = user_posts.objects.order_by('pt_likes')[:5]
+    most_commented_items = user_posts.objects.order_by('pt_comment')[:5]
+    campus = user_profile.objects.values_list('ur_campus',flat=True).distinct().order_by('ur_campus')
+    students = user_profile.objects.filter(user__is_staff=False).values('ur_campus').annotate(
+        count_students=Count('ur_campus')
+    ).order_by('ur_campus')
+    alumni = user_profile.objects.filter(user__is_staff=True).values('ur_campus').annotate(
+        count_alumni=Count('ur_campus')
+    ).order_by('ur_campus')
+    students_dict = {item['ur_campus']: item['count_students'] for item in students}
+    alumni_dict = {item['ur_campus']: item['count_alumni'] for item in alumni}
+    s=[]
+    for i in campus:
+        if i in students_dict.keys():
+            s.append(students_dict[i])
+        else:
+            s.append(int(0))
+    a = []
+    for i in campus:
+        if i in alumni_dict.keys():
+            a.append(alumni_dict[i])
+        else:
+            a.append(int(0))
+
+    post_count_by_campus = user_profile.objects.annotate(
+    post_count=Count('user__user_posts'),
+    total_likes=Coalesce(Sum('user__user_posts__pt_likes'), Value(0))
+    ).values('ur_campus', 'post_count', 'total_likes')
+    user_count_by_course = user_profile.objects.values('ur_course').annotate(user_count=Count('id'))[:10]
+    campus_job_counts = user_profile.objects.values('ur_campus').annotate(job_count=Count('user__jobportal'))
+    print(campus_job_counts)
+    return render(request, 'cadmin/index.html',{'profile':profile,'notification':notification,'user_count':user_count,'post_count':post_count,'job_count':job_count,'like_count':like_count,'comment_count':comment_count,'most_liked_items':most_liked_items,'most_commented_items':most_commented_items,'campus':campus,'students':s,'alumni':a,'post_count_by_campus':post_count_by_campus,'user_count_by_course':user_count_by_course,'campus_job_counts':campus_job_counts})
 
 def noti_change(request,id):
     notification = Notifications.objects.get(id=id)

@@ -16,9 +16,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from students.views import job,jobposting,jobsearch,jobcategory,details,fulljob , user_user_login,editprofile,home,addprofile,posts,profile,like_post,comment,peoples,followes,connections,applyjob,user_message,send_message,about,send_admin,message_show,user_logout,noti_delete,create_ac,alumni_group,poststatus
+from students.views import job,jobposting,jobsearch,jobcategory,details,fulljob , user_user_login,editprofile,home,addprofile,posts,profile,like_post,comment,peoples,followes,connections,applyjob,user_message,send_message,about,send_admin,message_show,user_logout,noti_delete,create_ac,alumni_group,poststatus,search_proj
                              
-from cadmin.views import Dashboard,table , statuschange , edituser , user_login ,deleteprofile,profiletable,jobtable,deletejob,posttable,post_status,liketable,likestatus,comment_table,deletecomment,profileadd,adduser,edit_profile,noti_change,noti_table,notifi_change,alumni,jobedit,follow_bridge,unfollow,msg_delete,msg_table,admin_msg,solve,unoti_table
+from cadmin.views import Dashboard,table , statuschange ,u_logout, edituser , user_login ,deleteprofile,profiletable,jobtable,deletejob,posttable,post_status,liketable,likestatus,comment_table,deletecomment,profileadd,adduser,edit_profile,noti_change,noti_table,notifi_change,alumni,jobedit,follow_bridge,unfollow,msg_delete,msg_table,admin_msg,solve,unoti_table
 # urls.py
 from django.conf import settings
 from django.conf.urls.static import static
@@ -55,11 +55,13 @@ urlpatterns = [
     path('noti_delete/<int:id>',noti_delete, name='noti_delete'),
     path('alumni',alumni_group,name='alumni_group'),
     path('cadmin/post_status/<int:id>',poststatus, name='post_status'),
+    path('search/',search_proj,name='search'),
     
     # login
     path('user_login' , user_login , name="user_login"),
     #logout
     path('logout',user_logout,name='user_logout'),
+    path('u_logout',u_logout,name='u_logout'),
     # register
     path('create_account',create_ac,name='create_ac'),
 

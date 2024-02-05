@@ -41,13 +41,22 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
 
 <!-- Navbar -->
 <div class="w3-top ">
- <div class="w3-bar w3-black w3-left-align w3-xlarge">
+ <div class="w3-bar w3-black w3-left-align w3-large">
   <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-theme-d2" href="javascript:void(0);" onclick="openNav()"><i class="fa fa-bars"></i></a>
   <a href="{% url 'home' %}" class="w3-bar-item w3-button w3-padding-large w3-black"><i class="fa fa-home w3-margin-right" style='font-size:24px'></i>HOME</a>
   <a href="{% url 'peoples' %}" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="News"><i class="fa fa-globe" style='font-size:24px'></i>PEOPLES</a>
   <a href="{% url 'connections' %}" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="christ jobs"><i class='fas fa-handshake' style='font-size:24px'></i>CONNECTIONS</a>
   <a href="{% url 'job' %}" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="christ jobs"><i class='fas fa-briefcase' style='font-size:24px'></i>CHRIST JOBS</a>
   <a href="{% url 'message_show' %}" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Messages"><i class="fa fa-envelope" style='font-size:24px'></i>MESSAGES</a>
+  <div class="search w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">
+    <form action="{% url 'search' %}" method="post">
+      {% csrf_token %}
+        <input type="text" placeholder="Search Courses" name="search" required>
+        <button type="submit">
+            <i class="fa fa-search" style="font-size: 18px;"></i>
+        </button>
+    </form>
+</div>
   <div class="w3-dropdown-hover w3-hide-small">
     <button class="w3-button w3-padding-large" title="Notifications"><i class="fa fa-bell"></i><span class="w3-badge w3-right w3-small w3-green">{{ noti|length }}</span></button>     
     <div class="w3-dropdown-content w3-card-4 w3-bar-block" style="width:300px">
