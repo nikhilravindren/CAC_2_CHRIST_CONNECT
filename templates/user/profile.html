@@ -139,7 +139,7 @@
           {% for post in posts %}
           <div class="col">
             <div class="card h-100">
-              {% if '.mp4' in post.pt_media %}
+              {% if '.mp4' in post.pt_media.url %}
               <video src="{{post.pt_media.url}}"></video>
               {% else %}
               <img src="{{ post.pt_media.url }}" alt="{{post.id}}" >
