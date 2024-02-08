@@ -12,22 +12,30 @@ Welcome to the Django Social Media App! This project is designed to create a soc
 4. [Usage](#usage)
 5. [Project Structure](#project-structure)
 6. [Dependencies](#dependencies)
-7. [Contributing](#contributing)
 
 
-## Project Overview(main features)
+## Project Overview
 
 This Django project aims to provide a comprehensive social media platform with the following modules:
 
 1. **Admin Page (Dashboard):** It allows administrators to register user profiles, manage notifications, and handle messages.
+ ![Alt text](static/user/images/read/dashboard.jpeg)
 
 2. **Login Page:** Provides a secure login page for users to access only to their own account on the social media platform.
+![Alt text](static/user/images/read/loginpic.jpeg)
 
 3. **User Profile:** Enables users to create and manage their profiles, allowing them to post photos, videos, post their achievements and other content.
+![Alt text](static/user/images/read/userprofilepic.jpeg)
 
 4. **Home Page:** Displays posts from other users, providing a centralized feed of shared content to like and comment.
+![Alt text](static/user/images/read/homepagenewsfeed.jpeg)
 
 5. **Job Portal:** An exclusive section for alumni to post available job opportunities, fostering career connections within the community of Christites.
+![Alt text](static/user/images/read/christjobspic.jpeg)
+
+6. **Message box:** A message box for the users to interact with each other
+![Alt text](static/user/images/read/messagebox.jpeg)
+
 
 ## Main Features
 
@@ -72,6 +80,40 @@ python manage.py runserver
 
 3. Explore different modules and features of the social media app.
 
+## Project structure
+django-social-media-app/
+│
+├── media/
+│   ├── user/
+│   │   └── images/
+│   │       └── read/
+│   │           ├── dashboard.jpeg
+│   │           ├── loginpic.jpeg
+│   │           ├── userprofilepic.jpeg
+│   │           ├── homepagenewsfeed.jpeg
+│   │           ├── christjobspic.jpeg
+│   │           └── messagebox.jpeg
+│   └── ... (other media files)
+│
+├── static/
+│   └── ... (other static files)
+│
+├── yourapp/
+│   ├── migrations/
+│   ├── templates/
+│   ├── static/
+│   ├── admin.py
+│   ├── models.py
+│   ├── views.py
+│   └── ...
+│
+├── social_media/
+│   ├── settings.py
+│   ├── urls.py
+│   └── ...
+│
+├── manage.py
+└── README.md
 
 
 ## Dependencies
