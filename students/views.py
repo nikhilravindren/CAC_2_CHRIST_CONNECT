@@ -10,6 +10,7 @@ from cadmin.models import Notifications
 from itertools import chain
 from operator import attrgetter
 from django.contrib.auth.hashers import make_password
+from django.db.models import Q
 
 
 
@@ -505,6 +506,34 @@ def poststatus(request,id):
         post.save()
     return redirect('profile')
     
+
+def search_proj(request):
+    if request.method == 'POST':
+        want = request.POST['search']
+        if want:
+            searched_users = User.objects.filter(Q(username__icontains=want))
+            all_datas = user_profile.objects.filter(user__in=searched_users)
+
+            follows = user_follow.objects.filter(followd_by=request.user, follow_status=True).values('followd_to')
+            a = [follow["followd_to"] for follow in follows]
+
+            paginator = Paginator(all_datas, 10)
+
+            page = request.GET.get('page')
+            try:
+                datas = paginator.page(page)
+            except PageNotAnInteger:
+                datas = paginator.page(1)
+            except EmptyPage:
+                datas = paginator.page(paginator.num_pages)
+
+            noti = user_Notification.objects.filter(done_to=request.user, done_status=True)
+            msg = 'no match user found!..'
+            return render(request, 'user/search.html', {'datas': datas, 'follows': a, 'noti': noti,'msg':msg})
+        else:
+            msg = 'no match user found!..'
+            return render(request, 'user/search.html',{'msg':msg})
+
 
 
 
