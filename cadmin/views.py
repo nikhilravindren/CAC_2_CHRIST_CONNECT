@@ -67,13 +67,13 @@ def Dashboard(request):
         else:
             a.append(int(0))
 
-    post_count_by_campus = user_profile.objects.annotate(
+    post_count_by_campus = user_profile.objects.values('ur_campus').annotate(
     post_count=Count('user__user_posts'),
     total_likes=Coalesce(Sum('user__user_posts__pt_likes'), Value(0))
-    ).values('ur_campus', 'post_count', 'total_likes')
+    ).order_by('ur_campus', 'post_count', 'total_likes').distinct()
     user_count_by_course = user_profile.objects.values('ur_course').annotate(user_count=Count('id'))[:10]
     campus_job_counts = user_profile.objects.values('ur_campus').annotate(job_count=Count('user__jobportal'))
-    print(campus_job_counts)
+    print(post_count_by_campus)
     return render(request, 'cadmin/index.html',{'profile':profile,'notification':notification,'user_count':user_count,'post_count':post_count,'job_count':job_count,'like_count':like_count,'comment_count':comment_count,'most_liked_items':most_liked_items,'most_commented_items':most_commented_items,'campus':campus,'students':s,'alumni':a,'post_count_by_campus':post_count_by_campus,'user_count_by_course':user_count_by_course,'campus_job_counts':campus_job_counts})
 
 def noti_change(request,id):

@@ -51,7 +51,7 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
   <div class="search w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">
     <form action="{% url 'search' %}" method="post">
       {% csrf_token %}
-        <input type="text" placeholder="Search Courses" name="search" required>
+        <input type="text" placeholder="Search peoples" name="search" required>
         <button type="submit">
             <i class="fa fa-search" style="font-size: 18px;"></i>
         </button>
